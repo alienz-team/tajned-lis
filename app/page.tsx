@@ -15,7 +15,12 @@ type Question = {
   hint?: string;
   warning?: string;
 };
-type StepDef = { title: string; code: string; intro: string; questions: Question[] };
+type StepDef = {
+  title: string;
+  code: string;
+  intro: string;
+  questions: Question[];
+};
 type Answers = Record<string, string[]>;
 
 // value stays a stable English key (for the future backend); label is shown.
@@ -443,7 +448,8 @@ export default function Home() {
       const cur = prev[q.id] ?? [];
       if (!q.multi) return { ...prev, [q.id]: [value] };
       // multi-select: "None" is exclusive
-      if (value === NONE) return { ...prev, [q.id]: cur.includes(value) ? [] : [value] };
+      if (value === NONE)
+        return { ...prev, [q.id]: cur.includes(value) ? [] : [value] };
       const without = cur.filter((v) => v !== NONE);
       return {
         ...prev,
@@ -528,7 +534,10 @@ export default function Home() {
         </header>
 
         {/* tabs */}
-        <div role="tablist" className="mb-4 grid grid-cols-2 border border-green-700">
+        <div
+          role="tablist"
+          className="mb-4 grid grid-cols-2 border border-green-700"
+        >
           {(
             [
               ["apply", "تقديم طلب انضمام"],
@@ -565,7 +574,10 @@ export default function Home() {
               </p>
             </div>
 
-            <form onSubmit={checkStatus} className="flex flex-col gap-3 sm:flex-row">
+            <form
+              onSubmit={checkStatus}
+              className="flex flex-col gap-3 sm:flex-row"
+            >
               <label className="sr-only" htmlFor="status-token">
                 رمز المجنّد
               </label>
@@ -670,8 +682,11 @@ export default function Home() {
             <div className="mb-4" aria-label={`الخطوة ${step + 1} من ${TOTAL}`}>
               <div className="mb-1 flex justify-between text-xs text-green-600">
                 <span>
-                  المرحلة {Math.min(step + 1, TOTAL).toString().padStart(2, "0")}/
-                  {TOTAL.toString().padStart(2, "0")}
+                  المرحلة{" "}
+                  {Math.min(step + 1, TOTAL)
+                    .toString()
+                    .padStart(2, "0")}
+                  /{TOTAL.toString().padStart(2, "0")}
                 </span>
                 <span>{done ? "مكتمل" : "قيد التنفيذ"}</span>
               </div>
@@ -788,7 +803,9 @@ export default function Home() {
                                     />
                                   )}
                                 </span>
-                                <span className="leading-relaxed">{opt.label}</span>
+                                <span className="leading-relaxed">
+                                  {opt.label}
+                                </span>
                               </label>
                             );
                           })}
@@ -820,7 +837,9 @@ export default function Home() {
 
               {done && (
                 <div className="text-center">
-                  <p className="text-xs text-green-600">[ الخطوة {String(STEPS.length + 1).padStart(2, "0")} ]</p>
+                  <p className="text-xs text-green-600">
+                    [ الخطوة {String(STEPS.length + 1).padStart(2, "0")} ]
+                  </p>
                   <h2 className="mt-1 text-xl font-semibold text-green-300 sm:text-2xl">
                     اكتمل التسجيل
                   </h2>
